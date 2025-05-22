@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Login(){
     const {loginUser , isLoading} = useAuth();
@@ -8,6 +9,7 @@ export default function Login(){
         email:"",
         password:""
     });
+    const navigate = useNavigate();
     const handleOnChange = (e)=>{
         setLoginData({...loginData , [e.target.name]:e.target.value})
     }
@@ -16,10 +18,10 @@ export default function Login(){
         const response = await loginUser(loginData);
         if(response.success){
             console.log("login", response?.data);
-            alert("login success");
+            navigate("/");
         }else{
             console.log("login failed:", response?.error);
-            alert(response?.error);
+            toast.error(response?.error || "Server Error!");
         }
     }
     return(

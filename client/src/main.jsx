@@ -11,6 +11,7 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import EditBlog from './pages/EditBlog.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
+  import { ToastContainer } from 'react-toastify';
 const router = createBrowserRouter([
   {
     path:"/",
@@ -52,6 +53,18 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
       <RouterProvider router={router}/>
+      <ToastContainer
+      position="top-center"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick={false}
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="dark"
+      />
     </AuthProvider>
   </StrictMode>,
 )

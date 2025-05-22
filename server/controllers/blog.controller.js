@@ -22,15 +22,15 @@ exports.newBlog = asyncHandler(async (req,res)=>{
 
 //check exist BlogTitle
 exports.existBlogTitle = asyncHandler(async (req,res)=>{
-    const { title , user } = req.query;
+    const { title } = req.query;
     if(!title){
         throw new ApiError(400 , "title is required");
     }
-    const existBlogTitle = await Blog.findOne({$and:[{title} , {user}]});
+    const existBlogTitle = await Blog.findOne({title});
     if(existBlogTitle){
         throw new ApiError(400 , "title is alreadyExist");
     }
-    return res.status(201).json(
+    return res.status(200).json(
         new ApiResponse("blogTitle is available" , {} , 200)
     )
 })
@@ -41,7 +41,7 @@ exports.allBlogs = asyncHandler(async (req,res)=>{
     if(blogs.length === 0){
         throw new ApiError(500 , "blogs not found!");
     }
-    return res.status(201).json(
+    return res.status(200).json(
         new ApiResponse("blogs are" , blogs , 200)
     )
 })
@@ -56,7 +56,7 @@ exports.getABlog = asyncHandler(async (req,res)=>{
     if(!blog){
         throw new ApiError(404 , "blog not found!");
     }
-    return res.status(201).json(
+    return res.status(200).json(
         new ApiResponse("blogs is" , blog , 200)
     )
 })
@@ -72,7 +72,7 @@ exports.allUserBlogs = asyncHandler(async (req,res)=>{
     if(blogs.length === 0){
         throw new ApiError(404 , "blogs not found!");
     }
-    return res.status(201).json(
+    return res.status(200).json(
         new ApiResponse("user blogs are" , blogs , 200)
     )
 })
@@ -88,8 +88,8 @@ exports.editBlog = asyncHandler(async (req,res)=>{
     if(!Editedblog){
         throw new ApiError(400 , "blogs not found!");
     }
-    return res.status(201).json(
-        new ApiResponse("edited Blog is" , Editedblog , 200)
+    return res.status(200).json(
+        new ApiResponse("blog is edited!" , Editedblog , 200)
     )
 })
 
@@ -104,5 +104,7 @@ exports.deleteBlog = asyncHandler(async (req,res)=>{
     if(!deletedblog){
         throw new ApiError(400 , "blogs not found!");
     }
-    return res.status(204).json()
+    return res.status(200).json(
+        new ApiResponse("blog is deleted!" , {} , 200)
+    )
 })

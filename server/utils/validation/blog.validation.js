@@ -12,4 +12,5 @@ exports.editBlogSchema = Joi.object({
     content:Joi.string().trim().optional(),
     tag:Joi.string().valid("Tech" , "Education" , "Entertainment" , "Music" , "Politics").default("Tech").trim().optional(),
     status:Joi.string().valid("Published" , "Draft").default("Published").trim().optional(),
+    user:Joi.string().hex().length(24).optional()
 }).min(1);

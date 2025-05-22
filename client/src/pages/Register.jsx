@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { toast } from 'react-toastify';
 
 export default function Register(){
     const {registerUser , isLoading} = useAuth();
@@ -9,6 +10,7 @@ export default function Register(){
         email:"",
         password:""
     });
+    const navigate = useNavigate();
     const handleOnChange = (e)=>{
         setRegisterData({...registerData , [e.target.name]:e.target.value})
     }
@@ -17,10 +19,10 @@ export default function Register(){
         const response = await registerUser(registerData);
         if(response.success){
             console.log("Registration successful!", response.data);
-            alert("register Success")
+            navigate("/");
         }else{
             console.log("Registration failed:", response.error);
-            alert(response?.error);
+            toast.error(response.error || "server Error!");
         }
     }
     return(

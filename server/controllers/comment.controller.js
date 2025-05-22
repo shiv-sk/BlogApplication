@@ -35,7 +35,7 @@ exports.allCommentsofBlog = asyncHandler(async (req,res)=>{
     if(!blogId){
         throw new ApiError(400 , "blogId is missing or not valid");
     }
-    const allComments = await Comment.find({blog:blogId});
+    const allComments = await Comment.find({blog:blogId}).populate("user" , "name");
     
     if(allComments.length === 0){
         throw new ApiError(400 , "comments not found!");
